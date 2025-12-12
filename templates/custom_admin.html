@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <h1 class="text-white mb-4 fw-bold">Admin Dashboard</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card dashboard-card bg-primary text-white mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Total Users</h5>
+                    <p class="display-4 fw-bold">{{ user_count }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card glass-card p-4">
+        <h3 class="mb-4 text-primary">Registered Users</h3>
+        <div class="table-responsive">
+            <table class="table table-hover table-borderless align-middle">
+                <thead>
+                    <tr class="table-light">
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Date Joined</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in users %}
+                    <tr>
+                        <td><span class="fw-bold">{{ u.username }}</span></td>
+                        <td>{{ u.email }}</td>
+                        <td>{{ u.date_joined|date:"M d, Y" }}</td>
+                        <td>
+                            {% if u.is_superuser %}
+                            <span class="badge bg-danger">Admin</span>
+                            {% else %}
+                            <span class="badge bg-secondary">User</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
