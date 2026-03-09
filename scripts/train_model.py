@@ -1,10 +1,11 @@
-import tensorflow as tf
+
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, Dropout
 from tensorflow.keras.models import Model
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 import os
+import json
 
 # Configuration
 IMG_SIZE = (224, 224)
@@ -88,6 +89,13 @@ def train():
     )
 
     print("Training finished.")
+    
+    # Save class indices for prediction
+    class_indices_path = os.path.join(os.path.dirname(MODEL_SAVE_PATH), 'class_indices.json')
+    with open(class_indices_path, 'w') as f:
+        json.dump(train_generator.class_indices, f, indent=4)
+    print(f"Class indices saved to {class_indices_path}")
+    print(f"Classes: {train_generator.class_indices}")
 
 
 if __name__ == "__main__":

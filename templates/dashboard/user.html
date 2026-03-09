@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5 min-vh-100">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-white fw-bold">My Dashboard</h2>
+        <a href="{% url 'index' %}" class="btn btn-outline-light rounded-pill px-4">New Prediction</a>
+    </div>
+
+    <div class="card glass-card border-0 shadow-lg">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-borderless text-white mb-0" style="background: transparent;">
+                    <thead class="border-bottom border-light">
+                        <tr>
+                            <th class="py-3 px-4">Image</th>
+                            <th class="py-3 px-4">Predicted Breed</th>
+                            <th class="py-3 px-4">Date & Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in history %}
+                        <tr class="border-bottom border-secondary align-middle">
+                            <td class="py-3 px-4">
+                                {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="Cow upload" class="rounded shadow-sm"
+                                    style="width: 60px; height: 60px; object-fit: cover;">
+                                {% else %}
+                                <span class="text-muted">No Image</span>
+                                {% endif %}
+                            </td>
+                            <td class="py-3 px-4 fw-medium">{{ item.predicted_breed }}</td>
+                            <td class="py-3 px-4 text-white-50">{{ item.timestamp|date:"M d, Y h:i A" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center py-5 text-white-50">
+                                <h5>No predictions yet.</h5>
+                                <p>Head over to the home page to detect your first cow breed!</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .glass-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 1rem;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .table * {
+        color: inherit;
+        background: transparent !important;
+    }
+</style>
+{% endblock %}

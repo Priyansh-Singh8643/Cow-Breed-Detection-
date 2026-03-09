@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5 pt-5 min-vh-100">
+    <div class="card glass-card p-5 mx-auto text-center shadow-lg border-0" style="max-width: 500px;">
+        <i class="bi bi-exclamation-triangle-fill display-1 text-warning mb-3"></i>
+        <h2 class="text-white fw-bold">Delete Breed?</h2>
+        <p class="text-white-50 fs-5 mb-4">Are you sure you want to delete <strong>{{ breed.breed_name }}</strong>? This
+            action cannot be undone.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <a href="{% url 'custom_admin' %}" class="btn btn-outline-light rounded-pill px-5 py-2">Cancel</a>
+                <button type="submit" class="btn btn-danger rounded-pill px-5 py-2 shadow fw-bold">Yes, Delete</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .glass-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 1rem;
+    }
+</style>
+{% endblock %}

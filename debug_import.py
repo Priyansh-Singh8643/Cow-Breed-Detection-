@@ -1,7 +1,7 @@
 import sys
 import os
 import django
-from django.conf import settings
+
 
 # Setup Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')

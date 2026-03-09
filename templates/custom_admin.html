@@ -1,45 +1,58 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<div class="container mt-5 pt-5">
-    <h1 class="text-white mb-4 fw-bold">Admin Dashboard</h1>
+<div class="container mt-5 pt-5 min-vh-100">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-white fw-bold">Admin Dashboard</h1>
+        <a href="{% url 'add_breed' %}" class="btn btn-success fw-bold px-4 rounded-pill shadow">Add New Breed <i
+                class="bi bi-plus"></i></a>
+    </div>
 
     <div class="row">
         <div class="col-md-4">
-            <div class="card dashboard-card bg-primary text-white mb-4">
+            <div class="card bg-primary text-white mb-4 shadow border-0" style="border-radius:1rem;">
                 <div class="card-body">
                     <h5 class="card-title">Total Users</h5>
                     <p class="display-4 fw-bold">{{ user_count }}</p>
                 </div>
             </div>
         </div>
-
     </div>
 
-    <div class="card glass-card p-4">
-        <h3 class="mb-4 text-primary">Registered Users</h3>
+    <div class="card glass-card p-4 mb-5 shadow-lg border-0">
+        <h3 class="mb-4 text-white">Manage Cow Breeds</h3>
         <div class="table-responsive">
-            <table class="table table-hover table-borderless align-middle">
-                <thead>
-                    <tr class="table-light">
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Date Joined</th>
-                        <th>Status</th>
+            <table class="table table-hover table-borderless text-white align-middle" style="background: transparent;">
+                <thead class="border-bottom border-light">
+                    <tr>
+                        <th>Image</th>
+                        <th>Breed Name</th>
+                        <th>Origin</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for u in users %}
-                    <tr>
-                        <td><span class="fw-bold">{{ u.username }}</span></td>
-                        <td>{{ u.email }}</td>
-                        <td>{{ u.date_joined|date:"M d, Y" }}</td>
+                    {% for breed in breeds %}
+                    <tr class="border-bottom border-secondary">
                         <td>
-                            {% if u.is_superuser %}
-                            <span class="badge bg-danger">Admin</span>
-                            {% else %}
-                            <span class="badge bg-secondary">User</span>
+                            {% if breed.image %}
+                            <img src="{{ breed.image.url }}" alt="{{ breed.breed_name }}" class="rounded shadow-sm"
+                                style="width: 50px; height: 50px; object-fit: cover;">
                             {% endif %}
+                        </td>
+                        <td class="fw-bold">{{ breed.breed_name }}</td>
+                        <td>{{ breed.origin }}</td>
+                        <td>
+                            <a href="{% url 'edit_breed' breed.id %}"
+                                class="btn btn-sm btn-outline-light rounded-pill px-3">Edit</a>
+                            <a href="{% url 'delete_breed' breed.id %}"
+                                class="btn btn-sm btn-outline-danger rounded-pill px-3 ms-1">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-5 text-white-50">
+                            <h5>No breeds added yet.</h5>
+                            <p>Click "Add New Breed" to start populating your database.</p>
                         </td>
                     </tr>
                     {% endfor %}
@@ -48,4 +61,23 @@
         </div>
     </div>
 </div>
+
+<style>
+    .glass-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 1rem;
+    }
+
+    .table * {
+        color: inherit;
+        background: transparent !important;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+</style>
 {% endblock %}

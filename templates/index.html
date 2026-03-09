@@ -39,6 +39,16 @@
                         {{ confidence }}% Confidence
                     </div>
                 </div>
+
+                {% if breed_details %}
+                <div class="mt-4 text-start text-white bg-dark bg-opacity-50 p-4 rounded-4 shadow-sm">
+                    <h5 class="fw-bold text-success mb-3"><i class="bi bi-info-circle me-2"></i>Breed Details</h5>
+                    <p class="mb-2"><strong>Origin:</strong> {{ breed_details.origin }}</p>
+                    <p class="mb-2"><strong>Milk Production:</strong> {{ breed_details.milk_production }}</p>
+                    <hr class="border-light opacity-25 my-3">
+                    <p class="small text-white-75 mb-0" style="line-height: 1.6;">{{ breed_details.description }}</p>
+                </div>
+                {% endif %}
             </div>
         </div>
         {% endif %}

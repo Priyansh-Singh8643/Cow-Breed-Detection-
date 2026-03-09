@@ -23,3 +23,16 @@ class UserRegistrationForm(forms.ModelForm):
 
 class ImageUploadForm(forms.Form):
     image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file', 'id': 'imageUpload'}))
+
+from .models import CowBreed
+class CowBreedForm(forms.ModelForm):
+    class Meta:
+        model = CowBreed
+        fields = ['breed_name', 'origin', 'milk_production', 'description', 'image']
+        widgets = {
+            'breed_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'origin': forms.TextInput(attrs={'class': 'form-control'}),
+            'milk_production': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'image': forms.FileInput(attrs={'class': 'form-control-file'})
+        }
